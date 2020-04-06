@@ -20,6 +20,11 @@ class FacebookLoginController extends Controller
     			->where('email', $profile_data['email'])
     			->first();
     		if (!$user) {
+    			$user_with_same_email = User::where('email', $profile_data['email'])->count();
+    			if ($user_with_same_email) {
+    				return back()->with('alert', ['type' => 'danger', 'text' => "Sorry. Another user has already taken that email. If you think there is a mistake (eg. someone else has used your email without permission), please contact us on our <a href='https://www.facebook.com/Crowds-App-109008434076156'>Facebook page</a>."]);
+    			}
+
     			$user = User::create([
     				'email' => $profile_data['email'],
     				'password' => '',
