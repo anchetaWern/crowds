@@ -18,8 +18,8 @@ class OrdersFeedController extends Controller
     		->latest()
     		->paginate(10);
 
-		$provinces = DB::table('provinces')->get();
-		
+		$provinces = DB::table('provinces')->orderBy('name', 'ASC')->get();
+
     	return view('orders_feed', compact('orders', 'provinces'));
     }
 }

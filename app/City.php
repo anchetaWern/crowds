@@ -10,6 +10,6 @@ class City extends Model
     public $timestamps = false;
 
     public function barangays() {
-    	return $this->hasMany(Barangay::class);
+    	return $this->hasMany(Barangay::class)->orderBy('name', 'ASC');
     }
 }

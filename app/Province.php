@@ -10,6 +10,6 @@ class Province extends Model
     public $timestamps = false;
 
     public function cities() {
-    	return $this->hasMany(City::class);
+    	return $this->hasMany(City::class)->orderBy('name', 'ASC');
     }
 }
