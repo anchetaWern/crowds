@@ -21,12 +21,14 @@ Route::get('/privacy', function() {
 
 Auth::routes(['reset' => false]);
 
+Route::post('/facebook/login', 'FacebookLoginController@login');
+
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/', 'OrdersFeedController@index');
 
-    Route::patch('/setup/step-one', 'UserController@completeSetupStepOne');
-    Route::patch('/setup/step-two', 'UserController@completeSetupStepTwo');
+    Route::post('/setup/step-one', 'UserController@completeSetupStepOne');
+    Route::patch('/setup/step-two', 'UserController@completeSetupStepTwo'); // post because we also use it for Facebook login in non-auth pages
     Route::patch('/setup/step-three', 'UserController@completeSetupStepThree');
     Route::patch('/setup/step-four', 'UserController@completeSetupStepFour');
 

@@ -177,6 +177,7 @@ return [
 
         App\Providers\BotMan\DriverServiceProvider::class,
         Kreait\Laravel\Firebase\ServiceProvider::class,
+        App\Providers\FacebookLoginServiceProvider::class,
 
     ],
 

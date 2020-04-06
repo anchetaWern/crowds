@@ -110,13 +110,46 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Step 1: Where do you live?</h5>
+        <h5 class="modal-title">Step 1: Connect Facebook Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        @include('partials.alert')
+
+        @if (!session('alert'))
+        <div class="alert alert-info">
+        Your Facebook account will be used to validate your identity. Your profile picture will be displayed for your posts and bids.
+        </div>
+        @endif
+
+        <div class="row justify-content-center">
+          @include('partials.facebook-login-button')
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        @include('partials.facebook-login-form', ['facebook_login_form_action' => "/setup/step-one"])
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
+@if (Auth::user()->setup_step == 1)
+<div class="modal" id="user-setup-modal-1" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Step 2: Where do you live?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-      <form action="/setup/step-one" method="POST">
+      <form action="/setup/step-two" method="POST">
         @method('PATCH')
         @csrf
         @honeypot
@@ -195,53 +228,6 @@
         </div>
       </form>
 
-    </div>
-  </div>
-</div>
-@endif
-
-@if (Auth::user()->setup_step == 1)
-<div class="modal" id="user-setup-modal-1" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Step 2: Connect Facebook Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        @include('partials.alert')
-
-        @if (!session('alert'))
-        <div class="alert alert-info">
-        Your Facebook account will be used to validate your identity. Your profile picture will be used for your posts.
-        </div>
-        @endif
-
-        <div class="row justify-content-center">
-
-          <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="true" data-scope="public_profile,email" data-onlogin="checkLoginState();"></div>
-
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <form action="/setup/back" method="POST">
-          @method('PATCH')
-          @csrf
-          @honeypot
-          <button class="btn btn-secondary">Back</button>
-        </form>
-
-        <form action="/setup/step-two" method="POST" id="step-two-form">
-          @method('PATCH')
-          @csrf
-          @honeypot
-          <input type="hidden" name="_fb_access_token" id="_fb_access_token">
-        </form>
-      </div>
     </div>
   </div>
 </div>
@@ -455,6 +441,7 @@
 @section('foot_scripts')
 <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.13.1/firebase-messaging.js"></script>
+<script src="{{ mix('js/facebook-login.js') }}" defer></script>
 <script src="{{ mix('js/user-setup.js') }}" defer></script>
 <script src="{{ mix('js/orders-feed.js') }}" defer></script>
 @endsection
