@@ -41,6 +41,15 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     @yield('head_scripts')
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162859358-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-162859358-1');
+    </script>
 </head>
 <body>
     <div id="app">
