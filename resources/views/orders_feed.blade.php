@@ -52,7 +52,7 @@
                   </div>
                   <div class="pl-2">
                     <a href="/user/{{ $order->user_id }}/reputation">{{ $order->user->name }}</a>
-                   
+
                     <div>
                       @if ($order->user->user_type == 'officer')
                       <span class="badge badge-pill badge-info">officer</span>
@@ -183,7 +183,7 @@
                       <span class="sr-only">Loading...</span>
                     </div>
                   </div>
-                  
+
                   <div>
                     <select name="city" id="city" class="form-control @error('city') is-invalid @enderror">
 
@@ -245,7 +245,7 @@
       </div>
       <div class="modal-body">
         <div class="alert alert-info">
-          Your phone number or your Facebook Messenger ID will be used to facilitate communication between users. This information will only be available to both parties once a request has been accepted.
+          Your phone number or your Facebook Messenger ID will be used for communication between the person who made the order and the person who submitted the bid. This information will only be available to both parties once a request has been accepted.
         </div>
 
         <form action="/setup/step-three" method="POST" id="user-contact-form">
@@ -258,7 +258,7 @@
               <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
               <div class="col-md-6">
-                  <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number', Auth::user()->detail->phone_number) }}" autocomplete="off">
+                  <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number', Auth::user()->detail->phone_number) }}" placeholder="eg. 09176543210" autocomplete="off">
 
                   @error('phone_number')
                       <span class="invalid-feedback" role="alert">
@@ -272,7 +272,9 @@
               <label for="messenger_id" class="col-md-4 col-form-label text-md-right">{{ __('Messenger ID') }}</label>
 
               <div class="col-md-6">
-                  <input id="messenger_id" type="text" class="form-control @error('messenger_id') is-invalid @enderror" name="messenger_id" value="{{ old('messenger_id', Auth::user()->detail->messenger_id) }}" autocomplete="off">
+                  <input id="messenger_id" type="text" class="form-control @error('messenger_id') is-invalid @enderror" name="messenger_id" value="{{ old('messenger_id', Auth::user()->detail->messenger_id) }}" placeholder="eg. laong.laan25" autocomplete="off">
+
+                  <small>You can find this on your Messenger app by clicking on your profile picture on the upper left. Then under profile, you can see the username. Simply omit the m.me/ part.</small>
 
                   @error('messenger_id')
                       <span class="invalid-feedback" role="alert">
