@@ -8,6 +8,8 @@ use App\Services\SocialLoginServiceInterface;
 use App\User;
 use App\UserDetail;
 use App\UserSetting;
+use App\UserService;
+use App\ServiceType;
 use Auth;
 
 class FacebookLoginController extends Controller
@@ -32,19 +34,7 @@ class FacebookLoginController extends Controller
     				'facebook_id' => $profile_data['id'],
                 	'photo' => $profile_data['data']['url'],
     				'setup_step' => 1
-    			]);
-
-    			// note: maybe put this in model event for user creation to prevent repetition
-    			UserDetail::create([
-            		'user_id' => $user->id
-        		]);
-
-		        UserSetting::create([
-		            'user_id' => $user->id,
-		            'is_orders_notification_enabled' => false,
-		            'is_bid_notification_enabled' => false,
-		            'is_bid_accepted_notification_enabled' => false
-		        ]);
+    			]);                
     		}
 
     		Auth::loginUsingId($user->id);

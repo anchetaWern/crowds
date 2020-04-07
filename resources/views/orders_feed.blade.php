@@ -10,7 +10,7 @@
 
   <input type="hidden" id="setup_step" value="{{ Auth::user()->setup_step }}">
 
-  @if (Auth::user()->setup_step == 4)
+  @if (Auth::user()->setup_step == 5)
   <div class="row justify-content-center">
   <div class="col-md-4 mt-3">
     @include('partials.alert')
@@ -253,7 +253,6 @@
           @csrf
           @honeypot
 
-          <input type="hidden" name="_is_ios" id="_is_ios">
           <div class="form-group row">
               <label for="phone_number" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
@@ -274,7 +273,7 @@
               <div class="col-md-6">
                   <input id="messenger_id" type="text" class="form-control @error('messenger_id') is-invalid @enderror" name="messenger_id" value="{{ old('messenger_id', Auth::user()->detail->messenger_id) }}" placeholder="eg. laong.laan25" autocomplete="off">
 
-                  <small>You can find this on your Messenger app by clicking on your profile picture on the upper left. Then under profile, you can see the username. Simply omit the m.me/ part.</small>
+                  <small class="text-secondary">You can find this on your Messenger app by clicking on your profile picture on the upper left. Then under profile, you can see the username. Simply omit the m.me/ part.</small>
 
                   @error('messenger_id')
                       <span class="invalid-feedback" role="alert">
@@ -307,7 +306,64 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Step 4: Notifications</h5>
+        <h5 class="modal-title">Step 4: Which services will you render?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="alert alert-info">
+          Simply click <strong>Next</strong> if only want to avail services. You can always update your selection later in your account settings page.
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-left">
+
+            <form action="/setup/step-four" method="POST" id="services-form">
+              @method('PATCH')
+              @csrf
+              @honeypot
+
+              <input type="hidden" name="_is_ios" id="_is_ios">
+
+              @foreach ($service_types as $service)
+              <div class="custom-control custom-checkbox mb-2">
+                <input type="checkbox" class="custom-control-input" id="{{ Str::slug($service->name) }}" name="service_type[]" value="{{ $service->id }}" {{ isChecked($service->id, $user_services) }}>
+                <label class="custom-control-label" for="{{ Str::slug($service->name) }}">{{ $service->name }}</label>
+                <div>
+                  <small class="text-secondary">{{ $service->description }}</small>
+                </div>
+              </div>
+              @endforeach
+             
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <form action="/setup/back" method="POST">
+          @method('PATCH')
+          @csrf
+          @honeypot
+          <button class="btn btn-secondary">Back</button>
+        </form>
+
+        <button class="btn btn-primary" form="services-form">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+
+@if (Auth::user()->setup_step == 4)
+<div class="modal" id="user-setup-modal-4" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Step 5: Notifications</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -327,7 +383,7 @@
               <span class="button-text">Enable Notifications</span>
             </button>
 
-            <form action="/setup/step-four" method="POST" id="notifications-form">
+            <form action="/setup/step-five" method="POST" id="notifications-form">
               @method('PATCH')
               @csrf
               @honeypot
@@ -354,7 +410,7 @@
 @endif
 
 
-@if (Auth::user()->setup_step == 4)
+@if (Auth::user()->setup_step == 5)
 <div class="modal fade" id="bid-modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
 

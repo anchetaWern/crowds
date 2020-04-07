@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ValidateUserAddress;
 use App\Http\Requests\ValidateFacebookAccount;
 use App\Http\Requests\ValidateUserContactInfo;
+use App\Http\Requests\ValidateUserService;
 use Auth;
 use App\User;
 use App\Order;
 use App\Bid;
+use App\UserService;
 use App\Services\SocialLoginServiceInterface;
 
 class UserController extends Controller
@@ -57,24 +59,53 @@ class UserController extends Controller
             'messenger_id' => request('messenger_id')
         ]);
 
-        $setup_step = request()->has('_is_ios') && request('_is_ios') == 'yes' ? 4 : 3;
-
         Auth::user()->update([
-            'setup_step' => $setup_step // note: if device is iOS, skip directly to step 4 because there's no web notifications in iOS devices
+            'setup_step' => 3 
         ]);
-
-        if ($setup_step == 4) {
-            return back()->with('alert', ['type' => 'success', 'text' => "Setup complete! You can now make requests and submit bids."]);
-        }
 
         return back();
     }
 
 
-    public function completeSetupStepFour() {
+    public function completeSetupStepFour(ValidateUserService $request) {
+
+        $selected_service_types = request('service_type');
+
+        // note: kinda fishy
+        UserService::where('user_id', Auth::id())
+            ->update([
+                'is_enabled' => false
+            ]);
+
+        foreach ($selected_service_types as $service_type_id) {
+
+            // note: there might be a less fishy way of doing this
+            UserService::where('user_id', Auth::id())
+                ->where('service_type_id', $service_type_id)
+                ->update([
+                    'is_enabled' => true
+                ]);
+
+        }
+
+        $setup_step = request()->has('_is_ios') && request('_is_ios') == 'yes' ? 5 : 4;
+        if ($setup_step == 5) {
+            return back()->with('alert', ['type' => 'success', 'text' => "Setup complete! You can now make requests and submit bids."]);
+        }
+
+        Auth::user()->update([
+            'setup_step' => $setup_step // note: if device is iOS, skip directly to step 4 because there's no web notifications in iOS devices 
+        ]);
+
+        return back();
+    }
+
+
+    public function completeSetupStepFive() {
+        
         Auth::user()->update([
             'fcm_token' => request('_fcm_token'),
-            'setup_step' => 4,
+            'setup_step' => 5,
         ]);
 
         return back()->with('alert', ['type' => 'success', 'text' => "Setup complete! You can now make requests and submit bids."]);

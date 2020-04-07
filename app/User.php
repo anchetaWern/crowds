@@ -10,6 +10,8 @@ use App\Order;
 use App\Barangay;
 use App\Bid;
 use App\UserSetting;
+use App\UserService;
+use App\ServiceType;
 use App\OfficerAccountRequest;
 
 class User extends Authenticatable
@@ -43,8 +45,47 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    protected static function boot() {
+        parent::boot();
+        User::created(function ($model) {
+     
+            UserDetail::create([
+                'user_id' => $user->id
+            ]);
+
+            UserSetting::create([
+                'user_id' => $user->id,
+                'is_orders_notification_enabled' => false,
+                'is_bid_notification_enabled' => false,
+                'is_bid_accepted_notification_enabled' => false
+            ]);
+
+            $service_types = ServiceType::all();
+
+            foreach ($service_types as $type) {
+                UserService::create([
+                    'user_id' => $user->id,
+                    'service_type_id' => $type->id,
+                    'is_enabled' => false
+                ]);    
+            }
+
+        });
+    }
+
     public function detail() {
         return $this->hasOne(UserDetail::class);
+    }
+
+
+    public function services() {
+        return $this->hasMany(UserService::class);
+    }
+
+
+    public function enabledServices() {
+        return $this->hasMany(UserService::class)->where('is_enabled', true);
     }
 
 

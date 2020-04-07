@@ -10,7 +10,7 @@ const firebaseConfig = {
     appId: process.env.MIX_FIREBASE_APP_ID,
 };
 
-if ($("#setup_step").val() == "3") {
+if ($("#setup_step").val() == "4") {
     try {
         $(".button-loader").hide();
 

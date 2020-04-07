@@ -31,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/setup/step-two', 'UserController@completeSetupStepTwo'); // post because we also use it for Facebook login in non-auth pages
     Route::patch('/setup/step-three', 'UserController@completeSetupStepThree');
     Route::patch('/setup/step-four', 'UserController@completeSetupStepFour');
+    Route::patch('/setup/step-five', 'UserController@completeSetupStepFive');
 
     Route::patch('/setup/back', 'UserController@previousSetupStep');
 
