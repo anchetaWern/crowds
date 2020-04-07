@@ -19,17 +19,8 @@
     <form method="POST" action="/order/create">
       @csrf
       @honeypot
-      <div class="form-group">
-          <label for="description">What do you need?</label>
-          <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3" placeholder="12 eggs, 1 loaf bread, 1 fresh milk"></textarea>
-
-        @error('description')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
-      <button class="btn btn-primary float-right">Post</button>
+      
+      @include('partials.order-form', ['description_placeholder' => 'Buy 12 eggs, 1 loaf bread, and 1 fresh milk'])
     </form>
   </div>
   </div>

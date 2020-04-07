@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidateOrder;
 use App\Order;
+use App\ServiceType;
 use Auth;
 
 class BarangayOrdersController extends Controller
@@ -28,13 +29,15 @@ class BarangayOrdersController extends Controller
 	    		->paginate(10);
     	}
 
-    	return view('barangay-orders', compact('orders'));
+        $service_types = ServiceType::orderBy('id', 'ASC')->get();
+
+    	return view('barangay-orders', compact('orders', 'service_types'));
     }
 
 
     public function create(ValidateOrder $request) {
 
-    	Order::create(array_merge($request->validated(), [
+    	Order::create(array_merge($request->formatted(), [
             'user_id' => Auth::id(),
             'barangay_id' => Auth::user()->barangay_id,
             'is_barangay_only' => true,

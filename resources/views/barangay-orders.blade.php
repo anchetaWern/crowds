@@ -17,17 +17,8 @@
   		<form method="POST" action="/barangay-order/create">
   			@csrf
   			@honeypot
-  			<div class="form-group">
-  				<label for="description">What do you need?</label>
-  				<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="3" placeholder="eg. Relief goods.."></textarea>
-
-  				@error('description')
-  				<span class="invalid-feedback" role="alert">
-  				<strong>{{ $message }}</strong>
-  				</span>
-  				@enderror
-  			</div>
-  			<button class="btn btn-primary float-right">Post</button>
+  			
+        @include('partials.order-form', ['description_placeholder' => 'eg. Relief goods'])
   		</form>
     @else
       @include('partials.alert')

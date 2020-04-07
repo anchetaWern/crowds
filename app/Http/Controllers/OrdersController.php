@@ -14,7 +14,7 @@ class OrdersController extends Controller
 {
     public function create(ValidateOrder $request) {
 
-        Order::create(array_merge($request->validated(), [
+        Order::create(array_merge($request->formatted(), [
             'user_id' => Auth::id(),
             'barangay_id' => Auth::user()->barangay_id,
             'status' => 'posted'
@@ -23,6 +23,8 @@ class OrdersController extends Controller
         // note: might be better making it as a listener? 
         $users = User::whereHas('setting', function($q) {
             $q->where('is_orders_notification_enabled', true);
+        })->whereHas('enabledServices', function($q) {
+            $q->where('service_type_id', request('service_type'));
         })
             ->where('id', '!=', Auth::id())
             ->where('barangay_id', Auth::user()->barangay_id)

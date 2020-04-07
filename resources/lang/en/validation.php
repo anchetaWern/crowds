@@ -130,8 +130,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'service_type' => [
+            'numeric' => 'Please select a service type from the drop-down',
         ],
     ],
 
@@ -146,6 +146,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+
+    ],
 
 ];

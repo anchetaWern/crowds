@@ -24,7 +24,17 @@ class ValidateOrder extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|string|max:280'
+            'description' => 'required|string|max:280',
+            'service_type' => 'required|numeric|between:1,8'
+        ];
+    }
+
+    public function formatted()
+    {
+        $data = $this->all();
+        return [
+            'description' => $data['description'],
+            'service_type_id' => $data['service_type']
         ];
     }
 }

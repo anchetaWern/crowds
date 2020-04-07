@@ -10,7 +10,7 @@ use Auth;
 class Order extends Model
 {
     protected $fillable = [
-    	'user_id', 'barangay_id', 'is_barangay_only', 'description', 'status'
+    	'user_id', 'barangay_id', 'is_barangay_only', 'service_type_id', 'description', 'status'
     ];
 
 
