@@ -72,7 +72,7 @@
         <div class="form-group row">
           <label for="phone_number" class="col-sm-4 col-form-label">Phone number</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" id="phone_number" value="{{ old('phone_number', $detail->phone_number) }}">
+            <input type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" id="phone_number" value="{{ old('phone_number', $detail->phone_number) }}" placeholder="eg. 09176543210">
             
             @error('phone_number')
             <span class="invalid-feedback" role="alert">
@@ -85,7 +85,7 @@
         <div class="form-group row">
           <label for="messenger_id" class="col-sm-4 col-form-label">Messenger ID</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control @error('messenger_id') is-invalid @enderror" name="messenger_id" id="messenger_id" value="{{ old('messenger_id', $detail->messenger_id) }}">
+            <input type="text" class="form-control @error('messenger_id') is-invalid @enderror" name="messenger_id" id="messenger_id" value="{{ old('messenger_id', $detail->messenger_id) }}" placeholder="eg. laong.laan25">
             
             @error('messenger_id')
             <span class="invalid-feedback" role="alert">
