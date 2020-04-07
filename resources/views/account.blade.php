@@ -151,10 +151,10 @@
           </div>
         </fieldset>
       </form>
-    
+      
     </div>
   </div>
-  
+
   @if (Auth::user()->user_type == 'user')
   <div class="row justify-content-center">
     <div class="col-md-4 mt-3">
@@ -172,6 +172,19 @@
     </div>
   </div>
   @endif
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 mt-3">
+      <hr>
+      <p class="text-secondary">Note: This will delete all of your data (contact details, orders, and bids) from the database. This process is irreversible.</p>
+      <form action="/account/delete" method="POST">
+        @method('DELETE')
+        @csrf
+        @honeypot
+        <button type="button" class="btn btn-block btn-danger" id="delete-account">Delete account</button>
+      </form>
+    </div>
+  </div>
 </div>
 @endsection
 

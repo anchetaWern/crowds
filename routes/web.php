@@ -65,6 +65,7 @@ Route::middleware(['auth', 'setup.complete'])->group(function () {
     Route::patch('/account/password', 'AccountSettingsController@updatePassword');
     Route::patch('/account/contact', 'AccountSettingsController@updateContact');
     Route::patch('/account/notifications', 'AccountSettingsController@updateNotifications');
+    Route::delete('/account/delete', 'AccountSettingsController@deleteAccount');
 
     Route::get('/barangay', 'BarangayOrdersController@index');
     Route::post('/barangay-order/create', 'BarangayOrdersController@create')->middleware(['limit.order', 'only.non-officers']);

@@ -24,9 +24,20 @@ $('#request-officer-account').click(function() {
 		text: "Are you sure you want to continue? Your account could get banned if you're not who you say you are.",
 	}).then((result) => {
 	  if (result.value) {
-	  	console.log('rara');
 	    self.parent('form').submit();
 	  }
 	});
+});
 
+
+$('#delete-account').click(function() {
+	const self = $(this);
+
+	confirmAlert.fire({
+		text: "Are you sure you want to delete your account?",
+	}).then((result) => {
+	  if (result.value) {
+	    self.parent('form').submit();
+	  }
+	});
 });

@@ -7,6 +7,8 @@ use App\Http\Requests\ValidateUserContactInfo;
 use App\Http\Requests\ValidateChangePassword;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use App\Order;
+use App\Bid;
 
 class AccountSettingsController extends Controller
 {
@@ -51,5 +53,22 @@ class AccountSettingsController extends Controller
 
     	return back()
     		->with('alert', ['type' => 'success', 'text' => 'Updated notification settings']);
+    }
+
+
+    public function deleteAccount() {
+
+        Auth::user()->notifications()->delete();
+        Auth::user()->detail->delete();
+        $order_ids = Auth::user()->orders->pluck('id')->toArray();
+        $bid_ids = Auth::user()->bids->pluck('id')->toArray();
+
+        Order::destroy($order_ids);
+        Bid::destroy($bid_ids);
+
+        Auth::user()->delete();
+
+        return redirect('/login')
+            ->with('alert', ['type' => 'success', 'text' => 'Your account was deleted.']);
     }
 }
