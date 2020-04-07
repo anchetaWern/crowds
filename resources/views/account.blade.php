@@ -110,6 +110,28 @@
   <div class="row justify-content-center">
     <div class="col-md-4 mt-3">
 
+      <form action="/account/services" method="POST">
+        @method('PATCH')
+        @csrf
+        @honeypot
+
+        @include('partials.services')
+       
+        <div class="form-group row">
+          <div class="col-sm-12 mt-2">
+            <button class="btn btn-primary float-right">Update Services</button>
+          </div>
+        </div>
+      </form>
+      
+      <hr>
+
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 mt-3">
+
       <form action="/account/notifications" method="POST">
         @method('PATCH')
         @csrf

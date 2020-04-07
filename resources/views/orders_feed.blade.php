@@ -306,7 +306,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Step 4: Which services will you render?</h5>
+        <h5 class="modal-title">Step 4: Which services will you offer?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -327,15 +327,7 @@
 
               <input type="hidden" name="_is_ios" id="_is_ios">
 
-              @foreach ($service_types as $service)
-              <div class="custom-control custom-checkbox mb-2">
-                <input type="checkbox" class="custom-control-input" id="{{ Str::slug($service->name) }}" name="service_type[]" value="{{ $service->id }}" {{ isChecked($service->id, $user_services) }}>
-                <label class="custom-control-label" for="{{ Str::slug($service->name) }}">{{ $service->name }}</label>
-                <div>
-                  <small class="text-secondary">{{ $service->description }}</small>
-                </div>
-              </div>
-              @endforeach
+              @include('partials.services')
              
             </form>
 

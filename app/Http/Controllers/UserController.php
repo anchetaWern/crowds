@@ -77,15 +77,17 @@ class UserController extends Controller
                 'is_enabled' => false
             ]);
 
-        foreach ($selected_service_types as $service_type_id) {
+        if (request()->has('service_type')) {
+            foreach ($selected_service_types as $service_type_id) {
 
-            // note: there might be a less fishy way of doing this
-            UserService::where('user_id', Auth::id())
-                ->where('service_type_id', $service_type_id)
-                ->update([
-                    'is_enabled' => true
-                ]);
+                // note: there might be a less fishy way of doing this
+                UserService::where('user_id', Auth::id())
+                    ->where('service_type_id', $service_type_id)
+                    ->update([
+                        'is_enabled' => true
+                    ]);
 
+            }
         }
 
         $setup_step = request()->has('_is_ios') && request('_is_ios') == 'yes' ? 5 : 4;
