@@ -16,9 +16,9 @@
         </div>
         @endif
 
-        @if (!empty($orders_feed) && $order->bidsAcceptedFirst->count())
+        @if (!empty($orders_feed) && $order->postedBids->count())
         <div>
-          <span class="badge badge-primary">{{ $order->bidsAcceptedFirst->count() }} {{ Str::plural('bid', $order->bidsAcceptedFirst->count()) }}</span>
+          <span class="badge badge-primary">{{ $order->postedBids->count() }} {{ Str::plural('bid', $order->postedBids->count()) }}</span>
         </div>
         @endif
       </div>

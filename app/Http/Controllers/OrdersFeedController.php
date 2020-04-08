@@ -12,7 +12,9 @@ use DB;
 class OrdersFeedController extends Controller
 {
     public function index() {
-    	$orders = Order::with(['user', 'user.detail', 'postedBids'])
+        // note: not very performant to be selecting both postedBids and bidsAcceptedFirst
+        // might be better to just use an ordered collection for one of them (bidsAcceptedFirst)
+    	$orders = Order::with(['user', 'user.detail', 'postedBids', 'bidsAcceptedFirst'])
     		->posted()
     		->general()
             ->sameBarangay()
