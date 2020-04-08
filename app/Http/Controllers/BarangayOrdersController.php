@@ -38,7 +38,9 @@ class BarangayOrdersController extends Controller
             'expired'
         ];
 
-    	return view('barangay-orders', compact('selectedStatus', 'orders', 'service_types', 'service_types_arr', 'order_status'));
+        $page = 'orders'; // it's technically barangay orders but they're both classified as orders and not bids
+
+    	return view('barangay-orders', compact('selectedStatus', 'orders', 'service_types', 'service_types_arr', 'order_status', 'page'));
     }
 
 

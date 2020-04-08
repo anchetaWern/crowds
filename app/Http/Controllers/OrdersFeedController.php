@@ -28,6 +28,8 @@ class OrdersFeedController extends Controller
         
         $user_services = Auth::user()->enabledServices->pluck('service_type_id')->toArray();
         
-    	return view('orders_feed', compact('orders', 'provinces', 'service_types', 'service_types_arr', 'user_services'));
+        $page = 'orders'; // technically orders_feed, but classified as orders and not bids
+
+    	return view('orders_feed', compact('orders', 'provinces', 'service_types', 'service_types_arr', 'user_services', 'page'));
     }
 }

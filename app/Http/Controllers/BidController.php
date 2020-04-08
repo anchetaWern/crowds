@@ -77,7 +77,9 @@ class BidController extends Controller
         if (!session()->has('alert')) {
             session()->now('alert', ['type' => 'info', 'text' => "Once your bid is accepted, click on the contact button and contact the person first before proceeding with the service."]);
         }
-        return view('bids', compact('bids', 'service_types_arr'));
+
+        $page = 'bids';
+        return view('bids', compact('bids', 'service_types_arr', 'page'));
     }
 
     public function cancel(Bid $bid) {

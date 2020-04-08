@@ -30,49 +30,7 @@
       @if (count($orders) > 0)
         @foreach ($orders as $order)
           <div class="my-3">
-            <div class="card">
-              <div class="card-body">
-
-                <div class="float-right">
-                  <small class="text-secondary">{{ diffForHumans($order->created_at) }}</small>
-                </div>
-
-                <div class="d-flex flex-row mt-1">
-                  <div>
-                    <img src="{{ $order->user->photo }}" style="width: 50px;" class="img-thumbnail" alt="{{ $order->user->name }}">
-                  </div>
-                  <div class="pl-2">
-                    <a href="/user/{{ $order->user_id }}/reputation">{{ $order->user->name }}</a>
-
-                    <div>
-                      @if ($order->user->user_type == 'officer')
-                      <span class="badge badge-pill badge-info">officer</span>
-                      @endif
-                      @if ($order->postedBids->count())
-                      <span class="badge badge-pill badge-primary">{{ $order->postedBids->count() }} {{ Str::plural('bid', $order->postedBids->count()) }}</span>
-                      @endif
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mt-2">
-                  <span class="badge badge-pill badge-success">{{ $service_types_arr[$order->service_type_id] }}</span>
-                </div>
-
-                <div>
-                  <p>
-                  {{ $order->description }}
-                  </p>
-
-                  @if (Auth::id() != $order->user->id && Auth::user()->hasNoBids($order->postedBids) && $order->postedBids->count() < 10)
-                  <button class="btn btn-sm btn-success float-right bid" data-id="{{ $order->id }}" data-recipient="{{ $order->user->name }}" data-service-type="{{ $service_types_arr[$order->service_type_id] }}" data-description="{{ $order->description }}" data-datetime="{{ $order->created_at }}" data-friendlydatetime="{{ friendlyDatetime($order->created_at) }}">Bid</button>
-                  @endif
-
-                </div>
-
-              </div>
-            </div>
-
+            @include('partials.cards.order', ['orders_feed' => true, 'order_user' => $order->user])
           </div>
         @endforeach
 

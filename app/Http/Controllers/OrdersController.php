@@ -52,6 +52,7 @@ class OrdersController extends Controller
             session()->now('alert', ['type' => 'info', 'text' => "Once you've accepted a bid, click on the contact button and contact the person first to make sure they're legit. Click the no show button if you can't reach them."]);
         }
 
-        return view('orders', compact('orders', 'service_types_arr'));
+        $page = 'orders';
+        return view('orders', compact('orders', 'service_types_arr', 'page'));
     }
 }
