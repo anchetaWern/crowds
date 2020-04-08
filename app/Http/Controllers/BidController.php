@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ValidateBid;
 use App\Bid;
 use App\Order;
+use App\ServiceType;
 use Auth;
 use App\Notifications\BidReceived;
 use App\Notifications\BidAccepted;
@@ -71,11 +72,12 @@ class BidController extends Controller
     public function index() {
 
         $bids = Bid::byUser()->with(['order', 'order.user'])->latest()->paginate(10);
+        $service_types_arr = ServiceType::orderBy('id', 'ASC')->pluck('name', 'id')->toArray();
 
         if (!session()->has('alert')) {
             session()->now('alert', ['type' => 'info', 'text' => "Once your bid is accepted, click on the contact button and contact the person first before proceeding with the service."]);
         }
-        return view('bids', compact('bids'));
+        return view('bids', compact('bids', 'service_types_arr'));
     }
 
     public function cancel(Bid $bid) {

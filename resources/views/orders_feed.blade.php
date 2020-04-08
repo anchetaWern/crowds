@@ -55,13 +55,17 @@
                   </div>
                 </div>
 
-                <div class="mt-1">
+                <div class="mt-2">
+                  <span class="badge badge-pill badge-success">{{ $service_types_arr[$order->service_type_id] }}</span>
+                </div>
+
+                <div>
                   <p>
                   {{ $order->description }}
                   </p>
 
                   @if (Auth::id() != $order->user->id && Auth::user()->hasNoBids($order->postedBids) && $order->postedBids->count() < 10)
-                  <button class="btn btn-sm btn-success float-right bid" data-id="{{ $order->id }}" data-recipient="{{ $order->user->name }}" data-description="{{ $order->description }}" data-datetime="{{ $order->created_at }}" data-friendlydatetime="{{ friendlyDatetime($order->created_at) }}">Bid</button>
+                  <button class="btn btn-sm btn-success float-right bid" data-id="{{ $order->id }}" data-recipient="{{ $order->user->name }}" data-service-type="{{ $service_types_arr[$order->service_type_id] }}" data-description="{{ $order->description }}" data-datetime="{{ $order->created_at }}" data-friendlydatetime="{{ friendlyDatetime($order->created_at) }}">Bid</button>
                   @endif
 
                 </div>
@@ -411,6 +415,7 @@
                 @honeypot
                 <input type="hidden" name="order_id" id="order_id" value="{{ old('order_id') }}">
                 <input type="hidden" name="order_recipient" id="order_recipient" value="{{ old('order_recipient') }}">
+                <input type="hidden" name="order_service_type" id="order_service_type" value="{{ old('order_service_type') }}">
                 <input type="hidden" name="order_description" id="order_description" value="{{ old('order_description') }}">
                 <input type="hidden" name="order_created_at" id="order_created_at" value="{{ old('order_created_at') }}">
 
@@ -422,6 +427,15 @@
                         <div class="col-md-8 mt-1" id="order-recipient">
                         {{ old('order_recipient') }}
                       </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mt-3">
+                            <strong>Service type</strong>
+                        </div>
+                        <div class="col-md-8 mt-3 mb-3" id="order-service-type">
+                        {{ old('order_service_type') }}
+                        </div>
                     </div>
 
                     <div class="row">

@@ -30,8 +30,9 @@ class BarangayOrdersController extends Controller
     	}
 
         $service_types = ServiceType::orderBy('id', 'ASC')->get();
+        $service_types_arr = $service_types->pluck('name', 'id')->toArray();
 
-    	return view('barangay-orders', compact('orders', 'service_types'));
+    	return view('barangay-orders', compact('orders', 'service_types', 'service_types_arr'));
     }
 
 

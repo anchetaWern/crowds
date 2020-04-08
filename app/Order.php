@@ -77,4 +77,12 @@ class Order extends Model
         return $query->whereIn('status', ['posted', 'accepted']);
     }
 
+
+    public function scopeSameServiceTypeAsUser($query) {
+        $service_types = Auth::user()->enabledServices->pluck('service_type_id')->toArray();
+        return $query->where(function($query) use ($service_types) {
+            $query->whereIn('service_type_id', $service_types)
+                ->orWhere('user_id', Auth::id());
+        });
+    }
 }

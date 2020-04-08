@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ValidateOrder;
 use App\Order;
 use App\User;
+use App\ServiceType;
 use Auth;
 use App\Notifications\OrderCreated;
 use Illuminate\Support\Facades\Notification;
@@ -45,10 +46,12 @@ class OrdersController extends Controller
             ->latest()
             ->paginate(10);
 
+        $service_types_arr = ServiceType::orderBy('id', 'ASC')->pluck('name', 'id')->toArray();
+        
         if (!session()->has('alert')) {
             session()->now('alert', ['type' => 'info', 'text' => "Once you've accepted a bid, click on the contact button and contact the person first to make sure they're legit. Click the no show button if you can't reach them."]);
         }
 
-        return view('orders', compact('orders'));
+        return view('orders', compact('orders', 'service_types_arr'));
     }
 }

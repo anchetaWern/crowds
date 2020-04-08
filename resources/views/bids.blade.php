@@ -58,7 +58,11 @@
               @endif
             </div>
 
-            <div class="mt-1">
+            <div class="mt-2">
+              <span class="badge badge-pill badge-success">{{ $service_types_arr[$bid->order->service_type_id] }}</span>
+            </div>
+
+            <div>
               {{ $bid->order->description }}
             </div>
             

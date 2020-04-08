@@ -50,6 +50,10 @@
                   @endif
                 </div>
 
+                <div class="mt-2">
+                  <span class="badge badge-pill badge-success">{{ $service_types_arr[$order->service_type_id] }}</span>
+                </div>
+
                 <div>
                   {{ $order->description }}
                 </div>

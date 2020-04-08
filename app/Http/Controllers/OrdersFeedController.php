@@ -18,13 +18,16 @@ class OrdersFeedController extends Controller
             ->sameBarangay()
     		->createdWithinADay()
             ->hasLessThanFivePostedBids()
+            ->sameServiceTypeAsUser()
     		->latest()
     		->paginate(10);
 
 		$provinces = Province::orderBy('name', 'ASC')->get();
         $service_types = ServiceType::orderBy('id', 'ASC')->get();
+        $service_types_arr = $service_types->pluck('name', 'id')->toArray();
+        
         $user_services = Auth::user()->enabledServices->pluck('service_type_id')->toArray();
         
-    	return view('orders_feed', compact('orders', 'provinces', 'service_types', 'user_services'));
+    	return view('orders_feed', compact('orders', 'provinces', 'service_types', 'service_types_arr', 'user_services'));
     }
 }
