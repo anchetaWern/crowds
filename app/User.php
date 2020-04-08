@@ -51,11 +51,11 @@ class User extends Authenticatable
         User::created(function ($model) {
      
             UserDetail::create([
-                'user_id' => $user->id
+                'user_id' => $model->id
             ]);
 
             UserSetting::create([
-                'user_id' => $user->id,
+                'user_id' => $model->id,
                 'is_orders_notification_enabled' => false,
                 'is_bid_notification_enabled' => false,
                 'is_bid_accepted_notification_enabled' => false
@@ -65,7 +65,7 @@ class User extends Authenticatable
 
             foreach ($service_types as $type) {
                 UserService::create([
-                    'user_id' => $user->id,
+                    'user_id' => $model->id,
                     'service_type_id' => $type->id,
                     'is_enabled' => false
                 ]);    
