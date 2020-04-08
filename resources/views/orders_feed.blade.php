@@ -60,13 +60,13 @@
 
 @include('partials.modals.setup.step-one')
 
-@include('partials.modals.setup.step-two');
+@include('partials.modals.setup.step-two')
 
-@include('partials.modals.setup.step-three');
+@include('partials.modals.setup.step-three')
 
-@include('partials.modals.setup.step-four');
+@include('partials.modals.setup.step-four')
 
-@include('partials.modals.setup.step-five');
+@include('partials.modals.setup.step-five')
 
 
 @if (Auth::user()->setup_step == 5)
