@@ -3,7 +3,7 @@
 	<input type="checkbox" class="custom-control-input" id="{{ Str::slug($service->name) }}" name="service_type[]" value="{{ $service->id }}" {{ isChecked($service->id, $user_services) }}>
 	<label class="custom-control-label" for="{{ Str::slug($service->name) }}">{{ $service->name }}</label>
 	<div>
-	  <small class="text-secondary">{{ $service->description }}</small>
+	  <p class="text-secondary small">{{ $service->description }}</p>
 	</div>
 </div>
 @endforeach
