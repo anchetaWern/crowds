@@ -36,7 +36,7 @@ class ServiceTypesTableSeeder extends Seeder
     		[
     			'name' => 'Accommodation',
     			'bid_limit' => 5,
-    			'description' => 'Ask for accomodation for front-liners.'
+    			'description' => 'Ask for accommodation.'
     		],
     		[
     			'name' => 'Personal grooming',
