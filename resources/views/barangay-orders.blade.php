@@ -25,6 +25,25 @@
     @endif
     </div>
   </div>
+  
+  @if (Auth::user()->user_type == 'officer')
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+
+      <label for="order_status">Request status</label>
+      <select class="custom-select" name="order_status" id="order_status">
+        @foreach ($order_status as $status)
+        <option value="{{ $status }}" {{ isSelected($status, $selectedStatus) }}>{{ $status }}</option>
+        @endforeach
+      </select>
+
+      <div class="mt-3">
+        <a href="?status=posted" class="btn btn-primary float-right" id="filter-order">Filter</a>
+      </div>
+
+    </div>
+  </div>
+  @endif
 
 	<div class="row justify-content-center">
     <div class="col-md-4 mt-2">
@@ -51,6 +70,10 @@
                   <strong>Request #{{ orderNumber($order->id) }}</strong>
                   @if ($order->status == 'fulfilled')
                     <span class="badge badge-pill badge-success">fulfilled</span>
+                  @endif
+
+                  @if ($order->status == 'expired')
+                    <span class="badge badge-pill badge-secondary">expired</span>
                   @endif
                 </div>
 

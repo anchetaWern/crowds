@@ -38,6 +38,14 @@ class Order extends Model
         return $query->where('status', 'posted');
     }
 
+    public function scopeFulfilled($query) {
+        return $query->where('status', 'fulfilled');
+    }
+
+    public function scopeExpired($query) {
+        return $query->where('status', 'expired');
+    }
+
     public function scopeSameBarangay($query) {
         return $query->where('barangay_id', Auth::user()->barangay_id);
     }

@@ -29,3 +29,8 @@ $('.fulfill-order').click(function() {
 	  }
 	});
 });
+
+$('#order_status').change(function() {
+	const order_status = $(this).val();
+	$('#filter-order').prop('href', `?status=${order_status}`);
+});

@@ -13,7 +13,8 @@ class BarangayOrdersController extends Controller
     public function index() {
     	
     	$user_type = Auth::user()->user_type;
-
+        $selectedStatus = request()->has('status') ? request('status') : 'posted';
+        
     	$orders = null;
     	if ($user_type == 'user') {
     		$orders = Order::where('user_id', Auth::id())
@@ -22,7 +23,7 @@ class BarangayOrdersController extends Controller
             	->paginate(10);
     	} else if ($user_type == 'officer') {
     		$orders = Order::with(['user', 'user.detail'])
-	    		->posted()
+	    		->$selectedStatus()
 	    		->barangay()
 	            ->sameBarangay()
 	    		->latest()
@@ -31,8 +32,13 @@ class BarangayOrdersController extends Controller
 
         $service_types = ServiceType::orderBy('id', 'ASC')->get();
         $service_types_arr = $service_types->pluck('name', 'id')->toArray();
+        $order_status = [
+            'posted', 
+            'fulfilled',
+            'expired'
+        ];
 
-    	return view('barangay-orders', compact('orders', 'service_types', 'service_types_arr'));
+    	return view('barangay-orders', compact('selectedStatus', 'orders', 'service_types', 'service_types_arr', 'order_status'));
     }
 
 
