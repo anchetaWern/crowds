@@ -12,7 +12,7 @@
 
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Crowds Neighborhood App" />
+    <meta property="og:title" content="Crowds Bayanihan App" />
     <meta property="og:description" content="Where neighbors can rely on each other" />
     <meta property="og:url" content="https://crowds.page" />
     <meta property="og:site_name" content="Crowds" />
@@ -23,7 +23,7 @@
     <meta property="og:image:height" content="1024" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:description" content="Where neighbors can rely on each other" />
-    <meta name="twitter:title" content="Crowds Neighborhood App" />
+    <meta name="twitter:title" content="Crowds Bayanihan App" />
     <meta name="twitter:image" content="{{ asset('images/crowds-logo-sharing.jpg') }}" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
