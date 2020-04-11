@@ -51,7 +51,7 @@ class ImportCities extends Command
         }
 
 
-        foreach (Storage::allFiles('csv/cities/' . $province) as $city_path) {
+        foreach (Storage::allFiles('csv/provinces/' . $province) as $city_path) {
             $city_name = str_replace('.csv', '', ucwords(basename($city_path)));
 
             $city_id = DB::table('cities')
