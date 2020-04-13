@@ -7,9 +7,29 @@ use App\User;
 use App\Bid;
 use App\ServiceType;
 use Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($model) {
+
+            if ($model->status == 'cancelled') {
+                $bid_ids = $model->bids->pluck('id')->toArray();
+
+                Bid::whereIn('id', $bid_ids)->update([
+                    'status' => 'cancelled'
+                ]);
+            }
+
+        });
+    }
+
     protected $fillable = [
     	'user_id', 'barangay_id', 'is_barangay_only', 'service_type_id', 'description', 'status'
     ];
@@ -97,5 +117,14 @@ class Order extends Model
             $query->whereIn('service_type_id', $service_types)
                 ->orWhere('user_id', Auth::id());
         });
+    }
+
+
+    public function cancel() {
+        $this->update([
+            'status' => 'cancelled'
+        ]);
+
+        $this->delete();
     }
 }

@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
 
         'only.non-officers' => \App\Http\Middleware\OnlyForNonOfficers::class,
         'only.contactable-users' => \App\Http\Middleware\OnlyContactableUsers::class,
+        'is.order-owner' => \App\Http\Middleware\IsOrderOwner::class
     ];
 
     /**

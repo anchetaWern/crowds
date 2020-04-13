@@ -49,6 +49,7 @@ Route::middleware(['auth', 'setup.complete'])->group(function () {
     Route::post('/bid/create', 'BidController@create')->middleware('limit.bid');
 
     Route::get('/orders', 'OrdersController@index');
+    Route::delete('/order/{order}/delete', 'OrdersController@delete')->middleware('is.order-owner');
 
     Route::patch('/bid/{bid}/accept', 'BidController@accept');
 

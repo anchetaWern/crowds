@@ -16,8 +16,16 @@
       <div class="bids clearfix">
         @foreach ($bids as $bid)
           <div class="my-3">
-            @include('partials.cards.order', ['order' => $bid->order, 'order_user' => $bid->order->user])
-            
+            @if ($bid->order)
+                @include('partials.cards.order', ['order' => $bid->order, 'order_user' => $bid->order->user])
+            @else
+                <div class="card card-main">
+                    <div class="card-body">
+                        Request #{{ orderNumber($bid->order_id) }} <span class="badge badge-secondary">cancelled</span>
+                    </div>
+                </div>
+            @endif
+
             @include('partials.cards.bid', ['bid_user' => Auth::user()])
           </div>
         @endforeach

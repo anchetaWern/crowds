@@ -39,7 +39,18 @@
     <div>
       {{ $order->description }}
     </div>
-    
+
+    @if (empty($orders_feed) && $order->status == 'posted' && $order->user_id == Auth::id())
+    <div class="mt-1">
+        <form action="/order/{{ $order->id }}/delete" method="POST">
+            @method('DELETE')
+            @csrf
+            @honeypot
+            <button type="button" class="btn btn-sm btn-danger float-right cancel-order">Cancel</button>
+        </form>
+    </div>
+    @endif
+
     @if ($page == 'bids' && $bid->status == 'accepted')
       @include('partials.components.contact-button', ['contact_user_id' => $order->user_id])
     @endif
@@ -53,13 +64,13 @@
         <input type="hidden" name="_order_id" value="{{ $order->id }}">
         <button type="button" class="btn btn-sm btn-success float-right fulfill-order" data-user="{{ $order->user->name }}">Fulfill</button>
       </form>
-      
+
       <button class="btn btn-sm btn-secondary mr-2 float-right view-contact" data-userid="{{ $order->user_id }}" type="button">
         Contact
       </button>
     </div>
     @endif
-  
+
     @if (!empty($orders_feed) && Auth::id() != $order->user->id && Auth::user()->hasNoBids($order->postedBids) && $order->postedBids->count() < 10)
     <button class="btn btn-sm btn-success float-right bid" data-id="{{ $order->id }}" data-recipient="{{ $order->user->name }}" data-service-type="{{ $service_types_arr[$order->service_type_id] }}" data-description="{{ $order->description }}" data-datetime="{{ $order->created_at }}" data-friendlydatetime="{{ friendlyDatetime($order->created_at) }}">Bid</button>
     @endif

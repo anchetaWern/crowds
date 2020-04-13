@@ -21,7 +21,7 @@ class OrdersController extends Controller
             'status' => 'posted'
         ]));
 
-        // note: might be better making it as a listener? 
+        // note: might be better making it as a listener?
         $users = User::whereHas('setting', function($q) {
             $q->where('is_orders_notification_enabled', true);
         })->whereHas('enabledServices', function($q) {
@@ -39,7 +39,7 @@ class OrdersController extends Controller
 
 
     public function index() {
-        
+
         $orders = Order::where('user_id', Auth::id())
             ->with(['bidsAcceptedFirst', 'bids.user'])
             ->general()
@@ -47,12 +47,21 @@ class OrdersController extends Controller
             ->paginate(10);
 
         $service_types_arr = ServiceType::orderBy('id', 'ASC')->pluck('name', 'id')->toArray();
-        
+
         if (!session()->has('alert')) {
             session()->now('alert', ['type' => 'info', 'text' => "Once you've accepted a bid, click on the contact button and contact the person first to make sure they're legit. Click the no show button if you can't reach them."]);
         }
 
         $page = 'orders';
         return view('orders', compact('orders', 'service_types_arr', 'page'));
+    }
+
+
+    public function delete(Order $order) {
+        if ($order->status == 'posted') {
+            $order->cancel();
+            return back()->with('alert', ['type' => 'success', 'text' => 'Your request was cancelled.']);
+        }
+        abort(401, "You cannot cancel an order with an accepted bid.");
     }
 }
