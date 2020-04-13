@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/privacy', function() {
     return view('privacy');
 });
@@ -77,3 +73,12 @@ Route::middleware(['auth', 'setup.complete'])->group(function () {
 
     Route::post('/officer-account/request', 'OfficerAccountController@requestAccount');
 });
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/get-started', function() {
+    return view('get-started');
+});
+
