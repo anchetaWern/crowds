@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Bid;
+use App\ServiceType;
 use Auth;
 
 class Order extends Model
@@ -28,6 +29,10 @@ class Order extends Model
 
     public function postedBids() {
         return $this->hasMany(Bid::class)->where('status', 'posted');
+    }
+
+    public function serviceType() {
+        return $this->belongsTo(ServiceType::class, 'service_type_id');
     }
 
     public function accept() {

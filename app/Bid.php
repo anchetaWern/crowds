@@ -102,7 +102,8 @@ class Bid extends Model
             throw new \Exception("You can no longer submit a bid to an order which you've previously cancelled.");
         }
 
-        if ($order->status != 'posted' || $order->postedBids->count() >= 5) { 
+        $bid_limit = ($order->serviceType->bid_limit == 0) ? 1000 : $order->serviceType->bid_limit;
+        if ($order->status != 'posted' || $order->postedBids->count() >= $bid_limit) {
             throw new \Exception("Bids can no longer be submitted to this order.");
         }
 
